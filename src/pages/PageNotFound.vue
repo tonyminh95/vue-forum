@@ -15,7 +15,7 @@
     export default {}
 </script>
 
-<style modules>
+<style module>
     .headingLarge {
         font-size: 100px;
     }
