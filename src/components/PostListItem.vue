@@ -39,7 +39,7 @@
             },
 
             userPostsCount () {
-                return Object.keys(posts).length
+                return Object.keys(this.user.posts).length
             }
         }
     }
