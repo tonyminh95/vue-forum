@@ -2,9 +2,12 @@
     <div>
 		<div class="col-large push-top">
 			<h1>{{ thread.title }}</h1>
+
 			<PostList :posts="posts"/>
+
 			<PostEditor
-				@save-post="addPost"
+				@save="addPost"
+				:threadId="id"
 			/>
 		</div>
 	</div>
@@ -45,8 +48,12 @@
 
 		methods: {
 			addPost (eventData) {
-				console.log(eventData)
-				eventData.post.threadId = this.id
+				const post = eventData.post
+				const postId = eventData.post['.key']
+
+				this.$set(sourceData.posts, postId, post)
+				this.$set(this.thread.posts, postId, postId)
+				this.$set(sourceData.users[post.userId].posts, postId, postId)
 			}
 		}
     }

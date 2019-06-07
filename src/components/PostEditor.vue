@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="addPost">
+    <form @submit.prevent="save">
         <div class="form-group">
             <textarea
                 name=""
@@ -7,7 +7,7 @@
                 cols="30"
                 rows="10"
                 class="form-input"
-                v-model="newPostText"
+                v-model="text"
             ></textarea>
         </div>
         <div class="form-actions">
@@ -18,30 +18,32 @@
 
 <script>
     export default {
+        props: {
+            threadId: {
+                required: true
+            }
+        },
+
         data () {
             return {
-                newPostText: ''
+                text: ''
             }
         },
 
         methods: {
-            addPost () {
+            save () {
 				const postId = 'greatPost' + Math.random()
 				const post = {
-					text: this.newPostText,
+					text: this.text,
 					publishedAt: Math.floor(Date.now() / 1000),
-					threadId: this.id,
+					threadId: this.threadId,
 					userId: 'ALXhxjwgY9PinwNGHpfai6OWyDu2',
 					'.key': postId
-				}
+                }
 
-				// this.$set(sourceData.posts, postId, post)
-				// this.$set(this.thread.posts, postId, postId)
-				// this.$set(sourceData.users[post.userId].posts, postId, postId)
+                this.text = ''
 
-                this.newPostText = ''
-
-                this.$emit('save-post', {post})
+                this.$emit('save', {post})
 			}
         }
     }
