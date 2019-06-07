@@ -46,6 +46,7 @@
 		methods: {
 			addPost (eventData) {
 				console.log(eventData)
+				eventData.post.threadId = this.id
 			}
 		}
     }
