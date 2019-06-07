@@ -3,7 +3,9 @@
 		<div class="col-large push-top">
 			<h1>{{ thread.title }}</h1>
 			<PostList :posts="posts"/>
-			<PostEditor/>
+			<PostEditor
+				@save-post="addPost"
+			/>
 		</div>
 	</div>
 </template>
@@ -42,7 +44,9 @@
 		},
 
 		methods: {
-
+			addPost (eventData) {
+				console.log(eventData)
+			}
 		}
     }
 </script>
