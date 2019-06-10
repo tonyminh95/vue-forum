@@ -10,7 +10,10 @@
 
 			<PostList :posts="posts"/>
 
-			<PostEditor @save="addPost" :threadId="id"/>
+			<PostEditor
+				@save="addPost"
+				:threadId="id"
+			/>
 		</div>
 	</div>
 </template>
