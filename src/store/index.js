@@ -33,13 +33,13 @@ export default new Vuex.Store({
             const userId = state.authId
             const publishedAt = Math.floor(Date.now() / 1000)
 
-            const thread = {".key": threadId, title, forumId, publishedAt, userId}
+            const thread = {'.key': threadId, title, forumId, publishedAt, userId}
 
             commit('setThread', {thread, threadId})
             commit('appendThreadToForum', {forumId, threadId})
             commit('appendThreadToUser', {userId, threadId})
 
-            dispatch('createPost', {text, postId})
+            dispatch('createPost', {text, threadId})
         },
 
         updateUser ({commit}, user) {
