@@ -11,7 +11,8 @@
             ></textarea>
         </div>
         <div class="form-actions">
-            <button class="btn-blue">Submit post</button>
+            <button v-if="isUpdate" @click.prevent="cancel" class="btn btn-ghost">Cancel</button>
+            <button class="btn-blue">{{ isUpdate ? 'Edit' : 'Submit post' }}</button>
         </div>
     </form>
 </template>
@@ -66,6 +67,10 @@
                 }
 
                 return this.$store.dispatch('updatePost', payload)
+            },
+
+            cancel () {
+                this.$emit('cancel')
             },
 
             persist () {
