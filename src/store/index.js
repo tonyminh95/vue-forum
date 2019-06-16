@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import sourceData from '@/data'
-import { read } from 'fs';
 
 Vue.use(Vuex)
 
