@@ -66,7 +66,7 @@
 
 				return Object.values(this.$store.state.posts)
 					.filter(post => postIds.includes(post['.key']))
-			}
+			} 
 		}
     }
 </script>
