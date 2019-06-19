@@ -12,7 +12,7 @@
 			</h1>
 
 			<p>
-				By <a href="#" class="link-unstyled">Robin</a>, <AppDate :timestamp="thread.publishedAt"/>.
+				By <a href="#" class="link-unstyled">{{ user.name }}</a>, <AppDate :timestamp="thread.publishedAt"/>.
 				<span style="float:right; margin-top: 2px;" class="hide-mobile text-faded text-small">{{repliesCount}} replies by {{contributorsCount}} contributors</span>
 			</p>
 
@@ -51,6 +51,10 @@
                 return this.$store.getters.threadRepliesCount(this.thread['.key'])
 			},
 
+			user () {
+				return this.$store.state.users[this.thread.userId]
+			},
+
 			contributorsCount () {
 				const replies = Object.keys(this.thread.posts)
 					.filter(postId => postId !== this.thread.firstPostId)
@@ -66,7 +70,7 @@
 
 				return Object.values(this.$store.state.posts)
 					.filter(post => postIds.includes(post['.key']))
-			} 
+			}
 		}
     }
 </script>
