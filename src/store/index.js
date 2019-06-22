@@ -101,18 +101,23 @@ export default new Vuex.Store({
         },
 
         fetchThread ({dispatch}, {id}) {
-            // fetch thread
             return dispatch('fetchItem', {resource: 'threads', id})
         },
 
         fetchUser ({dispatch}, {id}) {
-            // fetch user
             return dispatch('fetchItem', {resource: 'users', id})
         },
 
         fetchPost ({dispatch}, {id}) {
-            // fetch post
             return dispatch('fetchItem', {resource: 'posts', id})
+        },
+
+        fetchCategory ({dispatch}, {id}) {
+            return dispatch('fetchItem', {resource: 'categories', id})
+        },
+
+        fetchForum ({dispatch}, {id}) {
+            return dispatch('fetchItem', {resource: 'forums', id})
         },
 
         fetchForums ({dispatch}, {ids}) {
@@ -121,6 +126,10 @@ export default new Vuex.Store({
 
         fetchPosts ({dispatch}, {ids}) {
             return dispatch('fetchItems', {resource: 'posts', ids})
+        },
+
+        fetchThreads ({dispatch}, {ids}) {
+            return dispatch('fetchItems', {resource: 'threads', ids})
         },
 
         fetchAllCategories ({state, commit}) {
@@ -151,6 +160,8 @@ export default new Vuex.Store({
         },
 
         fetchItems ({dispatch}, {ids, resource}) {
+            ids = Array.isArray(ids) ? ids : Object.keys(ids)
+
             return Promise.all(ids.map(id => dispatch('fetchItem', {id, resource})))
         }
     },
