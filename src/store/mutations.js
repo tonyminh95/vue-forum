@@ -4,7 +4,7 @@ const makeAppendChildToParentMutation = ({parent, child}) =>
     (state, {childId, parentId}) => {
         const resource = state[parent][parentId]
 
-        if (!resource['child']) {
+        if (!resource[child]) {
             Vue.set(resource, child, {})
         }
 
