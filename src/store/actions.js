@@ -61,6 +61,23 @@ export default {
         })
     },
 
+    createUser ({state, commit}, {email, name, username, avatar = null}) {
+        return new Promise((resolve, reject) => {
+            const registerAt = Math.floor(Date.now() / 1000)
+            const usernameLower = username.toLowerCase()
+            email = email.toLowerCase()
+            const user = {avatar, email, name, username, usernameLower, registerAt}
+            const userId = firebase.database().ref('users').push().key
+
+            firebase.database().ref('users').child(userId).set(user)
+                .then(() => {
+                    commit('setItem', {resource: 'users', id: userId, item: user})
+
+                    resolve(state.users[userId])
+                })
+        })
+    },
+
     updateThread ({commit, state, dispatch}, {title, text, id}) {
         return new Promise((resolve, reject) => {
             const thread = state.threads[id]
