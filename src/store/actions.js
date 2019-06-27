@@ -61,21 +61,27 @@ export default {
         })
     },
 
-    createUser ({state, commit}, {email, name, username, avatar = null}) {
+    createUser ({state, commit}, {id, email, name, username, avatar = null}) {
         return new Promise((resolve, reject) => {
-            const registerAt = Math.floor(Date.now() / 1000)
+            const registeredAt = Math.floor(Date.now() / 1000)
             const usernameLower = username.toLowerCase()
             email = email.toLowerCase()
-            const user = {avatar, email, name, username, usernameLower, registerAt}
-            const userId = firebase.database().ref('users').push().key
+            const user = {avatar, email, name, username, usernameLower, registeredAt}
 
-            firebase.database().ref('users').child(userId).set(user)
+            firebase.database().ref('users').child(id).set(user)
                 .then(() => {
-                    commit('setItem', {resource: 'users', id: userId, item: user})
+                    commit('setItem', {resource: 'users', id: id, item: user})
 
-                    resolve(state.users[userId])
+                    resolve(state.users[id])
                 })
         })
+    },
+
+    registerUserWithEmailAndPassword ({dispatch}, {email, name, username, password, avatar = null}) {
+        return firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(userCredential => {
+                return dispatch('createUser', {id: userCredential.user.uid, email, name, username, password, avatar})
+            })
     },
 
     updateThread ({commit, state, dispatch}, {title, text, id}) {
@@ -122,6 +128,12 @@ export default {
 
     updateUser ({commit}, user) {
         commit('setUser', {userId: user['.key'], user})
+    },
+
+    fetchAuthUser ({dispatch, commit}) {
+        const userId = firebase.auth().currentUser.uid
+        return dispatch('fetchUser', {id: userId})
+            .then(() => { commit('setAuthId', userId) })
     },
 
     fetchThread: ({dispatch}, {id}) => dispatch('fetchItem', {resource: 'threads', id}),
